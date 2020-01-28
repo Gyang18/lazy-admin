@@ -11,9 +11,31 @@
   "rules": {
     "indent": [true, "spaces", 2],
     "interface-name": false,
-    "no-consecutive-blank-lines": false,
     "object-literal-sort-keys": false,
     "ordered-imports": false,
-    "quotemark": [true, "single"]
+    "quotemark": [true, "single"],
+    "type-literal-delimiter": true,
+    "import-spacing": true,
+    "no-consecutive-blank-lines": true,
+    "max-line-length": [true, 120],
+    "variable-name": {
+      "options": [
+        "ban-keywords",
+        "check-format",
+        "allow-leading-underscore",
+        "allow-pascal-case"
+      ]
+    },
+    "switch-final-break": true,
+    "no-unnecessary-callback-wrapper": true,
+    "no-boolean-literal-compare": true,
+    "increment-decrement": true,
+    "arrow-return-shorthand": true,
+    "triple-equals": true,
+    "no-var-keyword": true,
+    "arrow-parens": [true, "ban-single-arg-parens"],
+    "typedef-whitespace": [ false, {}, {} ],
+    "whitespace": [true, "check-branch", "check-operator", "check-typecast"],
+    "no-empty": false
   }
 }

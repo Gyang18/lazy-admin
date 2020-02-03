@@ -15,7 +15,7 @@ const baseRoutes: Router[] = [
       {
         path: 'home',
         component: () => import('@/pages/Home'),
-        meta: { title: '首页', isBackShow: false },
+        meta: { title: '首页', isBackShow: false, isShowHeader: false },
       },
       {
         path: 'category',

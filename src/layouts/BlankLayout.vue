@@ -12,8 +12,14 @@
 <script lang="ts">
 import { Mixins, Component } from 'vue-property-decorator';
 import LayoutMixins from './mixin';
+import LayoutNavBar from '@/components/NavBar';
 
-@Component({ name: 'PageLayout' })
+@Component({
+  name: 'BlankLayout.vue',
+  components: {
+    LayoutNavBar,
+  },
+})
 export default class PageLayout extends Mixins(LayoutMixins) {
 }
 </script>

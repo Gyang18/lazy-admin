@@ -14,7 +14,7 @@ module.exports = {
     proxy: {
       // 开发接口代理
       '/dev': {
-        target: 'https://result.eolinker.com/G6Vp1bS7f5a9c23b26b7fd29c177572be8cef29caaa6500?uri=',
+        target: 'https://result.eolinker.com/qDHx17l96ad23b1551e1d644c98db5cdd5dd515bc8eb64e?uri=',
         ws: true,
         changeOrigin: true,
         // 用/api代替target里面的请求
@@ -48,9 +48,10 @@ module.exports = {
     loaderOptions: {
       postcss: {
         plugins: [
+          require('autoprefixer'),
           require('postcss-pxtorem')({
             rootValue: 16, // 换算的基数
-            selectorBlackList: ['van'], // 忽略转换正则匹配项
+            selectorBlackList: ['van', 'layout'], // 忽略转换正则匹配项
             propList: ['*'],
           }),
         ],

@@ -6,6 +6,9 @@ import store from './store';
 // styles
 import './styles';
 
+// plugins
+import './plugins';
+
 Vue.config.productionTip = false;
 
 new Vue({

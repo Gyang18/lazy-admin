@@ -1,13 +1,11 @@
 <template>
- <div class="layout-header">
-     <template v-if="routeMeta.isShowHeader === undefined ? true : routeMeta.isShowHeader">
-         <nav-bar
-         :title="routeMeta.title || 'yang shop'"
-         :left-text="routeMeta.navLeftText || ''"
-         :left-arrow="routeMeta.isBackShow === undefined ? true : routeMeta.isBackShow"
-         @click-left="onClickLeft"
-         />
-     </template>
+ <div class="layout-header" v-if="routeMeta.isShowHeader === undefined ? true : routeMeta.isShowHeader">
+     <nav-bar
+     :title="routeMeta.title || 'yang shop'"
+     :left-text="routeMeta.navLeftText || ''"
+     :left-arrow="routeMeta.isBackShow === undefined ? true : routeMeta.isBackShow"
+     @click-left="onClickLeft"
+     />
  </div>
 </template>
 

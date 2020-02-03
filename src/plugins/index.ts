@@ -1,0 +1,2 @@
+import './vant';
+import './loadsh';

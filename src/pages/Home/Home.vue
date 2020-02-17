@@ -34,7 +34,7 @@
   <!-- 分类导航 -->
    <div class="category-nav">
      <ul class="layout-flex layout-flex-left">
-       <li v-for="item in categoryList" :key="item.id">
+       <li v-for="item in categoryNavList" :key="item.id">
          <van-image
              round
              width="48px"
@@ -61,83 +61,17 @@
      </div>
      <div class="wrap-content">
        <div class="wrap-goods-list">
-         <scroll-wrapper :data="categoryList" scroll-x>
+         <scroll-wrapper :data="categoryGoods" scroll-x>
            <ul ref="goodsList" :style="{ width: goodsListWidth }">
-             <li>
+             <li v-for="item in categoryGoods" :key="item.id">
                <router-link class="content" tag="div" to="/">
                  <van-image
                      width="100px"
                      height="100px"
-                     src="http://img.gyang.live//shop/goods3.jpg"
+                     :src="item.cover"
                  />
-                 <h6 class="layout-text-ellipsis-1">古黛妃 短袖t恤女夏装2019新款韩版宽松</h6>
-                 <p class="layout-text-ellipsis-1 price">￥422</p>
-               </router-link>
-             </li>
-             <li>
-               <router-link class="content" tag="div" to="/">
-                 <van-image
-                     width="100px"
-                     height="100px"
-                     src="http://img.gyang.live//shop/goods3.jpg"
-                 />
-                 <h6 class="layout-text-ellipsis-1">古黛妃 短袖t恤女夏装2019新款韩版宽松</h6>
-                 <p class="layout-text-ellipsis-1 price">￥422</p>
-               </router-link>
-             </li>
-             <li>
-               <router-link class="content" tag="div" to="/">
-                 <van-image
-                     width="100px"
-                     height="100px"
-                     src="http://img.gyang.live//shop/goods3.jpg"
-                 />
-                 <h6 class="layout-text-ellipsis-1">古黛妃 短袖t恤女夏装2019新款韩版宽松</h6>
-                 <p class="layout-text-ellipsis-1 price">￥422</p>
-               </router-link>
-             </li>
-             <li>
-               <router-link class="content" tag="div" to="/">
-                 <van-image
-                     width="100px"
-                     height="100px"
-                     src="http://img.gyang.live//shop/goods3.jpg"
-                 />
-                 <h6 class="layout-text-ellipsis-1">古黛妃 短袖t恤女夏装2019新款韩版宽松</h6>
-                 <p class="layout-text-ellipsis-1 price">￥422</p>
-               </router-link>
-             </li>
-             <li>
-               <router-link class="content" tag="div" to="/">
-                 <van-image
-                     width="100px"
-                     height="100px"
-                     src="http://img.gyang.live//shop/goods3.jpg"
-                 />
-                 <h6 class="layout-text-ellipsis-1">古黛妃 短袖t恤女夏装2019新款韩版宽松</h6>
-                 <p class="layout-text-ellipsis-1 price">￥422</p>
-               </router-link>
-             </li>
-             <li>
-               <router-link class="content" tag="div" to="/">
-                 <van-image
-                     width="100px"
-                     height="100px"
-                     src="http://img.gyang.live//shop/goods3.jpg"
-                 />
-                 <h6 class="layout-text-ellipsis-1">古黛妃 短袖t恤女夏装2019新款韩版宽松</h6>
-                 <p class="layout-text-ellipsis-1 price">￥422</p>
-               </router-link>
-             </li>
-             <li>
-               <router-link class="content" tag="div" to="/">
-                 <van-image
-                     width="100px"
-                     height="100px"
-                     src="http://img.gyang.live//shop/goods3.jpg"
-                 />
-                 <h6 class="layout-text-ellipsis-1">古黛妃 短袖t恤女夏装2019新款韩版宽松</h6>
-                 <p class="layout-text-ellipsis-1 price">￥422</p>
+                 <h6 class="layout-text-ellipsis-1">{{ item.title }}</h6>
+                 <p class="layout-text-ellipsis-1 price">￥{{item.price}}</p>
                </router-link>
              </li>
            </ul>
@@ -147,13 +81,45 @@
    </div>
 <!-- 广告区域 -->
  <div class="home-a">
-   <van-image src="http://img.gyang.live/shop/ad2.jpg"
-     width="100%" height="80" fit="cover">
+   <van-image src="http://img.gyang.live/shop/exercise1.jpg"
+     width="100%" height="80" fit="fill">
      <template v-slot:loading>
        <van-loading type="spinner" size="20" />
      </template>
      <template v-slot:error>加载失败</template>
    </van-image>
+ </div>
+<!-- 推荐商品 -->
+ <div class="home-list-wrapper commend-wrapper">
+   <div class="layout-flex wrap-header">
+       <span class="header-icon">
+         <i class="iconfont">&#xe600;</i>
+       </span>
+     <div class="header-tit">
+       <h6 class="layout-text-ellipsis-1">推荐商品</h6>
+       <p class="layout-text-ellipsis-1">Recommended products</p>
+     </div>
+     <span class="header-arrow">
+         <van-icon name="arrow" size="16" />
+       </span>
+   </div>
+   <div class="wrap-content">
+     <div class="wrap-goods-list">
+         <ul>
+           <li v-for="item in commendGoods" :key="item.id">
+             <router-link class="content" tag="div" to="/">
+               <van-image
+                   width="100%"
+                   height="auto"
+                   :src="item.cover"
+               />
+               <h6 class="layout-text-ellipsis-1">{{ item.title }}</h6>
+               <p class="layout-text-ellipsis-1 price">￥{{ item.price }}</p>
+             </router-link>
+           </li>
+         </ul>
+     </div>
+   </div>
  </div>
  </div>
 </template>
@@ -161,9 +127,8 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import { Search, Swipe, SwipeItem } from 'vant';
-import { getBanner, getHomeCategory } from '@/api/home';
-// eslint-disable-next-line no-unused-vars
-import { BannerData, CategoryData } from '@/api/types';
+import { getHomeResult } from '@/api/home';
+import { BannerData, CategoryNavData, HomeGoodsData } from '@/api/types';
 import ScrollWrapper from '@/components/ScrollWarpper';
 
 @Component({
@@ -182,23 +147,27 @@ export default class Home extends Vue {
 
   private bannerList: BannerData[] = [];
 
-  private categoryList: CategoryData[] = [];
+  private categoryNavList: CategoryNavData[] = [];
+
+  private categoryGoods: HomeGoodsData[] = [];
+
+  private commendGoods: HomeGoodsData[] = [];
 
   private async getHomeData() {
-    const res = await getBanner();
-    const resCategory = await getHomeCategory();
+    const res = await getHomeResult();
     if (res.code === 200) {
-      this.bannerList = res.data;
-    }
-    if (resCategory.code === 200) {
-      this.categoryList = resCategory.data;
+      this.bannerList = res.data.banner;
+      this.categoryNavList = res.data.categoryNav;
+      this.categoryGoods = res.data.categoryGoods;
+      this.commendGoods = res.data.commendGoods;
     }
     this.setGoodsWidth();
   }
 
   private setGoodsWidth(): void {
     this.$nextTick(() => {
-      const lis = this.$refs.goodsList.children;
+      const goodsRefs: any = this.$refs.goodsList;
+      const lis = goodsRefs.children;
       if (!lis.length) {
         return;
       }
@@ -314,33 +283,46 @@ export default class Home extends Vue {
       height: auto;
       overflow: hidden;
     }
-    .wrap-goods-list {
-      width: 100%;
-      ul {
-        display: flex;
-        justify-content: flex-start;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        width: 600px;
-      }
-      li {
-        width: 100px;
-        margin-right: 12px;
-        .content {
-          display: block;
-          width: 100%;
-          font-size: 14px;
-          color: #303133;
-          line-height: 1.8;
-        }
-        .price {
-          color: #fa436a;
-        }
-      }
-    }
   }
   .home-a {
     height: 80px;
     margin-top: 8px;
+  }
+  .wrap-goods-list {
+    width: 100%;
+    ul {
+      display: flex;
+      justify-content: flex-start;
+      flex-direction: row;
+      flex-wrap: nowrap;
+    }
+    li {
+      width: 100px;
+      margin-right: 12px;
+      .content {
+        display: block;
+        width: 100%;
+        font-size: 14px;
+        color: #303133;
+        line-height: 1.8;
+      }
+      .price {
+        color: #fa436a;
+      }
+    }
+  }
+  .commend-wrapper {
+    margin-bottom: .5rem;
+    .wrap-goods-list {
+       ul {
+         flex-wrap: wrap;
+         li {
+           width: 50%;
+           padding: 0 .2rem;
+           margin-right: 0;
+           margin-bottom: .2rem;
+         }
+       }
+    }
   }
 </style>

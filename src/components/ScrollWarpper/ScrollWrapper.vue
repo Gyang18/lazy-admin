@@ -31,7 +31,7 @@ export default class ScrollWrapper extends Vue {
   @Prop({ default: false, type: Boolean }) readonly listenScroll: boolean | undefined;
 
   // 列表的数据
-  @Prop({ default: null, type: Array }) readonly data: [] | null;
+  @Prop({ default: null, type: Array }) readonly data!: [] | null;
 
   // 是否派发滚动到底部的事件，用于上拉加载
   @Prop({ default: false, type: Boolean }) readonly pullup: boolean | undefined;
@@ -45,9 +45,13 @@ export default class ScrollWrapper extends Vue {
   // 当数据更新后，刷新scroll的延时
   @Prop({ default: 20, type: Number }) readonly refreshDelay: number | undefined;
 
+  private scroll: any = null;
+
+  private refs: any = this.$refs;
+
   // 监听数据的变化，延时refreshDelay时间后调用refresh方法重新计算，保证滚动效果正常
   @Watch('data')
-  private onChangeData(val) {
+  private onChangeData() {
     setTimeout(() => {
       this.refresh();
     }, this.refreshDelay);
@@ -66,7 +70,7 @@ export default class ScrollWrapper extends Vue {
     }
     // console.log('开始初始化');
     // better-scroll的初始化
-    this.scroll = new BScroll(this.$refs.wrapper, {
+    this.scroll = new BScroll(this.refs.wrapper, {
       probeType: this.probeType,
       click: this.click,
       scrollX: this.scrollX,
@@ -74,7 +78,7 @@ export default class ScrollWrapper extends Vue {
     // console.log(this.scroll);
     // 是否派发滚动事件
     if (this.listenScroll) {
-      this.scroll.on('scroll', pos => {
+      this.scroll.on('scroll', (pos:any) => {
         this.$emit('scroll', pos);
       });
     }
@@ -90,7 +94,7 @@ export default class ScrollWrapper extends Vue {
     }
     // 是否派发顶部下拉事件，用于下拉刷新
     if (this.pulldown) {
-      this.scroll.on('touchend', pos => {
+      this.scroll.on('touchend', (pos:any) => {
         // 下拉动作
         if (pos.y > 50) {
           this.$emit('pulldown');

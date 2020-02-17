@@ -37,6 +37,10 @@
     "typedef-whitespace": [ false, {}, {} ],
     "whitespace": [true, "check-branch", "check-operator", "check-typecast"],
     "no-empty": false,
-    "no-console": [false, "log", "error"]
+    "no-console": [false, "log", "error"],
+    "member-access": false,
+    "no-unused-expression": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
   }
 }

@@ -34,7 +34,12 @@ Axios.interceptors.request.use(config => {
 // 响应拦截器
 Axios.interceptors.response.use(response => {
   const { data } = response;
-  if (data.code !== 200) {
+  if (typeof data === 'string') {
+    Toast.fail('返回数据格式错误');
+    // eslint-disable-next-line prefer-promise-reject-errors
+    return Promise.reject(`返回数据格式错误->${typeof data}`);
+  }
+  if (!data.success) {
     switch (data.code) {
       case 101:
         redirectLogin();
@@ -48,8 +53,9 @@ Axios.interceptors.response.use(response => {
         clearTimeout(timer);
       }, 2000);
     }
+  } else {
+    Toast.clear();
   }
-  Toast.clear();
   return data;
 }, err => {
   let msg: string = '';

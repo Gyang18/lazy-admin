@@ -1,7 +1,7 @@
 import qs from 'qs';
 import { AxiosPromise, AxiosRequestConfig, Method } from 'axios';
+import { Toast } from 'vant';
 import service from './axios';
-import {Toast} from 'vant';
 
 interface RequestParams {
   api: string;
@@ -28,6 +28,8 @@ function setParam(type?: string, param: object = {}): object {
 // 统一请求函数
 // response 服务器响应数据约束
 export interface ResponseResult<T> {
+  // 接口是否请求成功
+  success: boolean;
   // 状态码
   code: number;
   // 相应数据

@@ -41,3 +41,28 @@ export interface HomeData {
 }
 
 /** *********************** 首页数据约束 end   ******************* */
+
+/** *********************** 商品分类页数据约束 start   ******************* */
+export interface GoodsCategory {
+  id: number;
+  pid: number;
+  name: string;
+  cover?: string;
+  children?: GoodsCategory[];
+}
+export type GoodsCategoryList = GoodsCategory[];
+/** *********************** 商品分类页数据约束 end   ******************* */
+
+/** *********************** 商品购物车约束 start   ******************* */
+export interface GoodsCartItem {
+  id: number;
+  image: string;
+  attrVal: string;
+  stock: number;
+  title: string;
+  price: string | number;
+  num: number;
+  checked?: boolean;
+}
+export type GoodsCartList = GoodsCartItem[];
+/** *********************** 商品购物车约束 end   ******************* */

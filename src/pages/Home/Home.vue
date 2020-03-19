@@ -155,7 +155,7 @@ export default class Home extends Vue {
 
   private async getHomeData() {
     const res = await getHomeResult();
-    if (res.code === 200) {
+    if (res.success) {
       this.bannerList = res.data.banner;
       this.categoryNavList = res.data.categoryNav;
       this.categoryGoods = res.data.categoryGoods;
@@ -295,6 +295,7 @@ export default class Home extends Vue {
       justify-content: flex-start;
       flex-direction: row;
       flex-wrap: nowrap;
+      width: 100%;
     }
     li {
       width: 100px;

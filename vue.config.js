@@ -14,7 +14,7 @@ module.exports = {
     proxy: {
       // 开发接口代理
       '/dev': {
-        target: 'https://result.eolinker.com/qDHx17l96ad23b1551e1d644c98db5cdd5dd515bc8eb64e?uri=',
+        target: 'http://yapi.gyang.live/mock/11/app',
         ws: true,
         changeOrigin: true,
         // 用/api代替target里面的请求

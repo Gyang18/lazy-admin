@@ -41,6 +41,7 @@
     "member-access": false,
     "no-unused-expression": false,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "no-trailing-whitespace": false
   }
 }

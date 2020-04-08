@@ -94,7 +94,7 @@ export default class Cart extends Vue {
   }
 
   // 选择单个商品
-  choiceGoods(index: number): void {
+  private choiceGoods(index: number): void {
     const current = this.cartList[index];
     current.checked = Boolean(!current.checked);
     this.$set(this.cartList, index, current);
@@ -102,13 +102,13 @@ export default class Cart extends Vue {
   }
 
   // 删除单个商品
-  deleteGoodsItem(index: number): void {
+  private deleteGoodsItem(index: number): void {
     this.cartList.splice(index, 1);
     this.getSelectedGoods();
   }
 
   // 商品数量变化监听
-  goodsNumChange() {
+  private goodsNumChange() {
     this.getSelectedGoods();
   }
 

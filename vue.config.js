@@ -1,5 +1,5 @@
+const setting = require('./setting/index.js');
 const path = require('path');
-
 module.exports = {
   lintOnSave: true,
   // 代理配置
@@ -14,7 +14,7 @@ module.exports = {
     proxy: {
       // 开发接口代理
       '/dev': {
-        target: 'http://yapi.gyang.live/mock/11/app',
+        target: setting.apiDev,
         ws: true,
         changeOrigin: true,
         // 用/api代替target里面的请求
@@ -24,7 +24,7 @@ module.exports = {
       },
       // 测试接口地址
       '/test': {
-        target: 'http://192.168.0.151:80/pc',
+        target: setting.apiTest,
         ws: true,
         changeOrigin: true,
         // 用/api代替target里面的请求
@@ -34,7 +34,7 @@ module.exports = {
       },
       // 正式接口代理地址
       '/api': {
-        target: 'http://192.168.0.151:80/pc',
+        target: setting.api,
         ws: true,
         changeOrigin: true,
         // 用/api代替target里面的请求

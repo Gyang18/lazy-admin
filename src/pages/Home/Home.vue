@@ -1,6 +1,6 @@
 <template>
  <div class="page-container">
-<!-- 首页导航（自定义）-->
+   <!-- 首页导航（自定义）-->
    <div class="layout-header">
      <div class="layout-fixed layout-header-grade layout-flex header-search">
        <div class="layout-flex header-l">
@@ -17,110 +17,116 @@
        </div>
      </div>
    </div>
-   <!--banner区域-->
-   <div class="banner">
-      <swipe>
-        <swipe-item v-for="item in bannerList" :key="item.id">
-          <van-image :src="item.url"
-           width="100%" height="176" fit="cover">
+  <div class="home-wrapper-container">
+    <scroll-wrapper ref="scrollWrapper" pulldown @pulling-down="scrollPullDown">
+      <div class="home-container">
+        <!--banner区域-->
+        <div class="banner">
+          <swipe>
+            <swipe-item v-for="item in bannerList" :key="item.id">
+              <van-image :src="item.url"
+                         width="100%" height="176" fit="cover">
+                <template v-slot:loading>
+                  <van-loading type="spinner" size="20" />
+                </template>
+                <template v-slot:error>加载失败</template>
+              </van-image>
+            </swipe-item>
+          </swipe>
+        </div>
+        <!-- 分类导航 -->
+        <div class="category-nav">
+          <ul class="layout-flex layout-flex-left">
+            <li v-for="item in categoryNavList" :key="item.id">
+              <van-image
+                  round
+                  width="48px"
+                  height="48px"
+                  :src="item.cover"
+              />
+              <p class="layout-text-ellipsis-1 title">{{ item.title }}</p>
+            </li>
+          </ul>
+        </div>
+        <!-- 分类精选  -->
+        <div class="home-list-wrapper category-handpick">
+          <div class="layout-flex wrap-header">
+       <span class="header-icon">
+         <i class="iconfont">&#xe600;</i>
+       </span>
+            <div class="header-tit">
+              <h6 class="layout-text-ellipsis-1">分类推荐</h6>
+              <p class="layout-text-ellipsis-1">Competitive Products For You</p>
+            </div>
+            <span class="header-arrow">
+         <van-icon name="arrow" size="16" />
+       </span>
+          </div>
+          <div class="wrap-content">
+            <div class="wrap-goods-list">
+              <scroll-wrapper :data="categoryGoods" scroll-x>
+                <ul ref="goodsList" :style="{ width: goodsListWidth }">
+                  <li v-for="item in categoryGoods" :key="item.id">
+                    <router-link class="content" tag="div" to="/">
+                      <van-image
+                          width="100px"
+                          height="100px"
+                          :src="item.cover"
+                      />
+                      <h6 class="layout-text-ellipsis-1">{{ item.title }}</h6>
+                      <p class="layout-text-ellipsis-1 price">￥{{item.price}}</p>
+                    </router-link>
+                  </li>
+                </ul>
+              </scroll-wrapper>
+            </div>
+          </div>
+        </div>
+        <!-- 广告区域 -->
+        <div class="home-a">
+          <van-image src="http://img.gyang.live/shop/exercise1.jpg"
+                     width="100%" height="80" fit="fill">
             <template v-slot:loading>
               <van-loading type="spinner" size="20" />
             </template>
             <template v-slot:error>加载失败</template>
           </van-image>
-        </swipe-item>
-      </swipe>
-   </div>
-  <!-- 分类导航 -->
-   <div class="category-nav">
-     <ul class="layout-flex layout-flex-left">
-       <li v-for="item in categoryNavList" :key="item.id">
-         <van-image
-             round
-             width="48px"
-             height="48px"
-             :src="item.cover"
-         />
-         <p class="layout-text-ellipsis-1 title">{{ item.title }}</p>
-       </li>
-     </ul>
-   </div>
-  <!-- 分类精选  -->
-   <div class="home-list-wrapper category-handpick">
-     <div class="layout-flex wrap-header">
+        </div>
+        <!-- 推荐商品 -->
+        <div class="home-list-wrapper commend-wrapper">
+          <div class="layout-flex wrap-header">
        <span class="header-icon">
          <i class="iconfont">&#xe600;</i>
        </span>
-       <div class="header-tit">
-         <h6 class="layout-text-ellipsis-1">分类推荐</h6>
-         <p class="layout-text-ellipsis-1">Competitive Products For You</p>
-       </div>
-       <span class="header-arrow">
+            <div class="header-tit">
+              <h6 class="layout-text-ellipsis-1">推荐商品</h6>
+              <p class="layout-text-ellipsis-1">Recommended products</p>
+            </div>
+            <span class="header-arrow">
          <van-icon name="arrow" size="16" />
        </span>
-     </div>
-     <div class="wrap-content">
-       <div class="wrap-goods-list">
-         <scroll-wrapper :data="categoryGoods" scroll-x>
-           <ul ref="goodsList" :style="{ width: goodsListWidth }">
-             <li v-for="item in categoryGoods" :key="item.id">
-               <router-link class="content" tag="div" to="/">
-                 <van-image
-                     width="100px"
-                     height="100px"
-                     :src="item.cover"
-                 />
-                 <h6 class="layout-text-ellipsis-1">{{ item.title }}</h6>
-                 <p class="layout-text-ellipsis-1 price">￥{{item.price}}</p>
-               </router-link>
-             </li>
-           </ul>
-         </scroll-wrapper>
-       </div>
-     </div>
-   </div>
-<!-- 广告区域 -->
- <div class="home-a">
-   <van-image src="http://img.gyang.live/shop/exercise1.jpg"
-     width="100%" height="80" fit="fill">
-     <template v-slot:loading>
-       <van-loading type="spinner" size="20" />
-     </template>
-     <template v-slot:error>加载失败</template>
-   </van-image>
- </div>
-<!-- 推荐商品 -->
- <div class="home-list-wrapper commend-wrapper">
-   <div class="layout-flex wrap-header">
-       <span class="header-icon">
-         <i class="iconfont">&#xe600;</i>
-       </span>
-     <div class="header-tit">
-       <h6 class="layout-text-ellipsis-1">推荐商品</h6>
-       <p class="layout-text-ellipsis-1">Recommended products</p>
-     </div>
-     <span class="header-arrow">
-         <van-icon name="arrow" size="16" />
-       </span>
-   </div>
-   <div class="wrap-content">
-     <div class="wrap-goods-list">
-         <ul>
-           <li v-for="item in commendGoods" :key="item.id">
-             <router-link class="content" tag="div" to="/">
-               <van-image
-                   width="100%"
-                   height="auto"
-                   :src="item.cover"
-               />
-               <h6 class="layout-text-ellipsis-1">{{ item.title }}</h6>
-               <p class="layout-text-ellipsis-1 price">￥{{ item.price }}</p>
-             </router-link>
-           </li>
-         </ul>
-     </div>
-   </div>
- </div>
+          </div>
+          <div class="wrap-content">
+            <div class="wrap-goods-list">
+              <ul>
+                <li v-for="item in commendGoods" :key="item.id">
+                  <router-link class="content" tag="div" to="/">
+                    <van-image
+                        width="100%"
+                        height="auto"
+                        :src="item.cover"
+                    />
+                    <h6 class="layout-text-ellipsis-1">{{ item.title }}</h6>
+                    <p class="layout-text-ellipsis-1 price">￥{{ item.price }}</p>
+                  </router-link>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </scroll-wrapper>
+  </div>
  </div>
 </template>
 
@@ -130,6 +136,7 @@ import { Search, Swipe, SwipeItem } from 'vant';
 import { getHomeResult } from '@/api/home';
 import { BannerData, CategoryNavData, HomeGoodsData } from '@/api/types';
 import ScrollWrapper from '@/components/ScrollWarpper';
+import { ScrollPosition } from '@/components/ScrollWarpper/type';
 
 @Component({
   name: 'Home',
@@ -141,6 +148,11 @@ import ScrollWrapper from '@/components/ScrollWarpper';
   },
 })
 export default class Home extends Vue {
+  // $refs定义
+  public $refs!: Vue['$refs'] & {
+    scrollWrapper: any;
+  };
+
   private searchValue:string = '';
 
   private goodsListWidth: string = '100%';
@@ -177,6 +189,15 @@ export default class Home extends Vue {
     });
   }
 
+  // 页面下拉刷新
+  private scrollPullDown():void {
+    console.log('下拉刷新开始');
+    setTimeout(() => {
+      this.$refs.scrollWrapper.scroll.finishPullDown();
+      console.log('关闭下拉刷新');
+    }, 1000);
+  }
+
   private mounted() {
     this.getHomeData();
   }
@@ -186,6 +207,10 @@ export default class Home extends Vue {
 <style scoped lang="less">
   .layout-header {
     height: 55px;
+  }
+  .home-wrapper-container {
+    height:calc(100vh - 105px);
+    overflow: hidden;
   }
   .header-search {
     top: 0;

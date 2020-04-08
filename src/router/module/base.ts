@@ -30,7 +30,7 @@ const baseRoutes: Router[] = [
       {
         path: 'user',
         component: () => import('@/pages/User'),
-        meta: { title: '我的', isBackShow: false },
+        meta: { title: '我的', isBackShow: false, isShowHeader: false },
       },
     ],
   },

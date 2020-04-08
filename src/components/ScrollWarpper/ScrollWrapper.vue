@@ -39,7 +39,13 @@ export default class ScrollWrapper extends Vue {
   @Prop({ default: false, type: Boolean }) readonly pullup: boolean | undefined;
 
   // 是否派发顶部下拉的事件，用于下拉刷新
-  @Prop({ default: false, type: Boolean }) readonly pulldown: boolean | undefined;
+  @Prop({
+    default: () => ({
+      threshold: 50,
+      stop: 20,
+    }),
+    type: [Boolean, Object],
+  }) readonly pulldownConfig: boolean | object | undefined;
 
   // 是否派发列表滚动开始的事件
   @Prop({ default: false, type: Boolean }) readonly beforeScroll: boolean | undefined;
@@ -75,6 +81,10 @@ export default class ScrollWrapper extends Vue {
     return pos;
   }
 
+// 下拉刷新
+@Emit()
+private pullingDown(): void {}
+
   // 派发滚动结束事件
   @Emit()
 private scrollEnd<P>(pos: P):P {
@@ -87,6 +97,7 @@ private scrollEnd<P>(pos: P):P {
     }
     // better-scroll的初始化
     this.scroll = new BScroll(this.refs.wrapper, {
+      pullDownRefresh: this.pulldownConfig,
       probeType: this.probeType,
       click: this.click,
       scrollX: this.scrollX,
@@ -109,12 +120,9 @@ private scrollEnd<P>(pos: P):P {
       });
     }
     // 是否派发顶部下拉事件，用于下拉刷新
-    if (this.pulldown) {
-      this.scroll.on('touchend', (pos:any) => {
-      // 下拉动作
-        if (pos.y > 50) {
-          this.$emit('pulldown');
-        }
+    if (this.pulldownConfig) {
+      this.scroll.on('pullingDown', () => {
+        this.pullingDown();
       });
     }
 

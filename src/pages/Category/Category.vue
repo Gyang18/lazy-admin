@@ -62,6 +62,13 @@ import { GoodsCategory } from '@/api/types';
   },
 })
 export default class Category extends Vue {
+  // $refs定义
+  public $refs!: Vue['$refs'] & {
+    categoryGroup: any;
+    menuScroll: any;
+    ScrollContainer: any;
+  };
+    
   // 当前索引
   private currentIndex: number = 0;
 
@@ -76,13 +83,6 @@ export default class Category extends Vue {
 
   // 分类列表
   private categoryList: GoodsCategory[] = [];
-
-  // $refs定义
-  private $refs!: {
-    categoryGroup: any;
-    menuScroll: any;
-    ScrollContainer: any;
-  };
 
   // 监听右侧内容滚动事件
   private wrapperScroll(pos: ScrollPosition): void {

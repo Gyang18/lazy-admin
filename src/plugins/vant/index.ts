@@ -2,7 +2,7 @@
 import Vue from 'vue';
 import {
   Toast, Image, Loading, Icon,
-  Button,
+  Button, PullRefresh,
 } from 'vant';
 
 Vue.use(Toast);
@@ -10,3 +10,4 @@ Vue.use(Image);
 Vue.use(Loading);
 Vue.use(Icon);
 Vue.use(Button);
+Vue.use(PullRefresh);

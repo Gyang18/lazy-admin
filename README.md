@@ -1,4 +1,7 @@
+
 # yang-shop
+
+基于vue+typescript搭建的h5商城模版
 
 ## Project setup
 ```
@@ -32,3 +35,4 @@ npm run test:unit
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+

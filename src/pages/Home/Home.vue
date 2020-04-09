@@ -18,7 +18,10 @@
      </div>
    </div>
   <div class="home-wrapper-container">
-    <scroll-wrapper ref="scrollWrapper" pulldown @pulling-down="scrollPullDown">
+    <pull-loading :loadState="loadState"></pull-loading>
+    <scroll-wrapper ref="scrollWrapper"
+      pulldown @pulling-down="scrollPullDown" :pulldown-config="pullDownConfig"
+    listen-scroll :probe-type="1">
       <div class="home-container">
         <!--banner区域-->
         <div class="banner">
@@ -137,10 +140,12 @@ import { getHomeResult } from '@/api/home';
 import { BannerData, CategoryNavData, HomeGoodsData } from '@/api/types';
 import ScrollWrapper from '@/components/ScrollWarpper';
 import { ScrollPosition } from '@/components/ScrollWarpper/type';
+import PullLoading from '@/components/Loading/PullLoading.vue';
 
 @Component({
   name: 'Home',
   components: {
+    PullLoading,
     Search,
     Swipe,
     SwipeItem,
@@ -165,7 +170,14 @@ export default class Home extends Vue {
 
   private commendGoods: HomeGoodsData[] = [];
 
-  private async getHomeData() {
+  private pullDownConfig: object = {
+    threshold: 80,
+    stop: 40,
+  };
+
+  private loadState: number = 0;
+
+  private async getHomeData(callback?:() => void) {
     const res = await getHomeResult();
     if (res.success) {
       this.bannerList = res.data.banner;
@@ -174,6 +186,7 @@ export default class Home extends Vue {
       this.commendGoods = res.data.commendGoods;
     }
     this.setGoodsWidth();
+    callback && callback();
   }
 
   private setGoodsWidth(): void {
@@ -191,11 +204,11 @@ export default class Home extends Vue {
 
   // 页面下拉刷新
   private scrollPullDown():void {
-    console.log('下拉刷新开始');
-    setTimeout(() => {
+    this.loadState = 0;
+    this.getHomeData(() => {
+      this.loadState = 1;
       this.$refs.scrollWrapper.scroll.finishPullDown();
-      console.log('关闭下拉刷新');
-    }, 1000);
+    });
   }
 
   private mounted() {

@@ -9,7 +9,7 @@ import {
   Vue, Component, Prop, Watch, Emit,
 } from 'vue-property-decorator';
 import BScroll from 'better-scroll';
-import { ScrollPosition } from './type';
+import { ScrollPosition, PulldownConfig } from './type';
 
 @Component({ name: 'ScrollWrapper' })
 export default class ScrollWrapper extends Vue {
@@ -40,12 +40,9 @@ export default class ScrollWrapper extends Vue {
 
   // 是否派发顶部下拉的事件，用于下拉刷新
   @Prop({
-    default: () => ({
-      threshold: 50,
-      stop: 20,
-    }),
+    default: () => false,
     type: [Boolean, Object],
-  }) readonly pulldownConfig: boolean | object | undefined;
+  }) readonly pulldownConfig: boolean | PulldownConfig | undefined;
 
   // 是否派发列表滚动开始的事件
   @Prop({ default: false, type: Boolean }) readonly beforeScroll: boolean | undefined;
@@ -55,6 +52,16 @@ export default class ScrollWrapper extends Vue {
 
   // 当数据更新后，刷新scroll的延时
   @Prop({ default: 20, type: Number }) readonly refreshDelay: number | undefined;
+
+  // 设置滚动回弹动画
+  @Prop({
+    default: () => ({
+      top: true,
+      bottom: true,
+      left: true,
+      right: true,
+    }),
+  }) readonly bounceConfig: object | undefined;
 
   private scroll: any = null;
 
@@ -81,9 +88,17 @@ export default class ScrollWrapper extends Vue {
     return pos;
   }
 
+  // 下拉刷新前
+  @Emit()
+private beforePullingDown<P>(pos: P):P {
+  return pos;
+}
+
 // 下拉刷新
 @Emit()
-private pullingDown(): void {}
+  private pullingDown<P>(pos: P):P {
+    return pos;
+  }
 
   // 派发滚动结束事件
   @Emit()
@@ -101,6 +116,7 @@ private scrollEnd<P>(pos: P):P {
       probeType: this.probeType,
       click: this.click,
       scrollX: this.scrollX,
+      bounce: this.bounceConfig,
     });
     // console.log(this.scroll);
     // 是否派发滚动监听事件
@@ -121,9 +137,15 @@ private scrollEnd<P>(pos: P):P {
     }
     // 是否派发顶部下拉事件，用于下拉刷新
     if (this.pulldownConfig) {
-      this.scroll.on('pullingDown', () => {
-        this.pullingDown();
+      const threshold: number = typeof this.pulldownConfig === 'object' ? this.pulldownConfig.threshold : 50;
+      this.scroll.on('touchEnd', (pos: ScrollPosition) => {
+        if (pos.y > (threshold || 50)) {
+          this.pullingDown<ScrollPosition>(pos);
+        }
       });
+      // this.scroll.on('pullingDown', () => {
+      //   this.pullingDown();
+      // });
     }
 
     // 是否派发列表滚动开始的事件

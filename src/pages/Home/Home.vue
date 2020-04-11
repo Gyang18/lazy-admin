@@ -1,136 +1,135 @@
 <template>
- <div class="page-container">
-   <!-- 首页导航（自定义）-->
-   <div class="layout-header">
-     <div class="layout-fixed layout-header-grade layout-flex header-search">
-       <div class="layout-flex header-l">
-         <div class="logo">
-           <h1>shop</h1>
-         </div>
-       </div>
-       <div class="header-c">
-         <search v-model="searchValue" background="transparent"
-                 shape="round" placeholder="请输入搜索关键词" />
-       </div>
-       <div class="layout-flex header-r">
-         <van-icon name="chat-o" dot size="20" color="#fff"></van-icon>
-       </div>
-     </div>
-   </div>
-  <div class="home-wrapper-container">
-    <pull-loading :loadState="loadState"></pull-loading>
-    <scroll-wrapper ref="scrollWrapper"
-      pulldown @pulling-down="scrollPullDown" :pulldown-config="pullDownConfig"
-    listen-scroll :probe-type="1">
-      <div class="home-container">
-        <!--banner区域-->
-        <div class="banner">
-          <swipe>
-            <swipe-item v-for="item in bannerList" :key="item.id">
-              <van-image :src="item.url"
-                         width="100%" height="176" fit="cover">
-                <template v-slot:loading>
-                  <van-loading type="spinner" size="20" />
-                </template>
-                <template v-slot:error>加载失败</template>
-              </van-image>
-            </swipe-item>
-          </swipe>
+  <div class="page-container">
+    <!-- 首页导航（自定义）-->
+    <div class="layout-header">
+      <div class="layout-fixed layout-header-grade layout-flex header-search">
+        <div class="layout-flex header-l">
+          <div class="logo">
+            <h1>shop</h1>
+          </div>
         </div>
-        <!-- 分类导航 -->
-        <div class="category-nav">
-          <ul class="layout-flex layout-flex-left">
-            <li v-for="item in categoryNavList" :key="item.id">
-              <van-image
-                  round
-                  width="48px"
-                  height="48px"
-                  :src="item.cover"
-              />
-              <p class="layout-text-ellipsis-1 title">{{ item.title }}</p>
-            </li>
-          </ul>
+        <div class="header-c">
+          <search v-model="searchValue" background="transparent"
+                  shape="round" placeholder="请输入搜索关键词"/>
         </div>
-        <!-- 分类精选  -->
-        <div class="home-list-wrapper category-handpick">
-          <div class="layout-flex wrap-header">
+        <div class="layout-flex header-r">
+          <van-icon name="chat-o" dot size="20" color="#fff"></van-icon>
+        </div>
+      </div>
+    </div>
+    <div class="home-wrapper-container">
+      <scroll-wrapper ref="scrollWrapper" listen-scroll :probe-type="1" :bounce-config="bounceConfig">
+        <van-pull-refresh v-model="isPullLoading" @refresh="onRefresh" :disabled="false">
+<!--          <div class="home-container">-->
+<!--          </div>-->
+          <!--banner区域-->
+          <div class="banner">
+            <swipe>
+              <swipe-item v-for="item in bannerList" :key="item.id">
+                <van-image :src="item.url"
+                           width="100%" height="176" fit="cover">
+                  <template v-slot:loading>
+                    <van-loading type="spinner" size="20"/>
+                  </template>
+                  <template v-slot:error>加载失败</template>
+                </van-image>
+              </swipe-item>
+            </swipe>
+          </div>
+          <!-- 分类导航 -->
+          <div class="category-nav">
+            <ul class="layout-flex layout-flex-left">
+              <li v-for="item in categoryNavList" :key="item.id">
+                <van-image
+                    round
+                    width="48px"
+                    height="48px"
+                    :src="item.cover"
+                />
+                <p class="layout-text-ellipsis-1 title">{{ item.title }}</p>
+              </li>
+            </ul>
+          </div>
+          <!-- 分类精选  -->
+          <div class="home-list-wrapper category-handpick">
+            <div class="layout-flex wrap-header">
        <span class="header-icon">
          <i class="iconfont">&#xe600;</i>
        </span>
-            <div class="header-tit">
-              <h6 class="layout-text-ellipsis-1">分类推荐</h6>
-              <p class="layout-text-ellipsis-1">Competitive Products For You</p>
-            </div>
-            <span class="header-arrow">
-         <van-icon name="arrow" size="16" />
+              <div class="header-tit">
+                <h6 class="layout-text-ellipsis-1">分类推荐</h6>
+                <p class="layout-text-ellipsis-1">Competitive Products For You</p>
+              </div>
+              <span class="header-arrow">
+         <van-icon name="arrow" size="16"/>
        </span>
+            </div>
+            <div class="wrap-content">
+              <div class="wrap-goods-list">
+                <scroll-wrapper :data="categoryGoods" scroll-x>
+                  <ul ref="goodsList" :style="{ width: goodsListWidth }">
+                    <li v-for="item in categoryGoods" :key="item.id">
+                      <router-link class="content" tag="div" to="/">
+                        <van-image
+                            width="100px"
+                            height="100px"
+                            :src="item.cover"
+                        />
+                        <h6 class="layout-text-ellipsis-1">{{ item.title }}</h6>
+                        <p class="layout-text-ellipsis-1 price">￥{{item.price}}</p>
+                      </router-link>
+                    </li>
+                  </ul>
+                </scroll-wrapper>
+              </div>
+            </div>
           </div>
-          <div class="wrap-content">
-            <div class="wrap-goods-list">
-              <scroll-wrapper :data="categoryGoods" scroll-x>
-                <ul ref="goodsList" :style="{ width: goodsListWidth }">
-                  <li v-for="item in categoryGoods" :key="item.id">
+          <!-- 广告区域 -->
+          <div class="home-a">
+            <van-image src="http://img.gyang.live/shop/exercise1.jpg"
+                       width="100%" height="80" fit="fill">
+              <template v-slot:loading>
+                <van-loading type="spinner" size="20"/>
+              </template>
+              <template v-slot:error>加载失败</template>
+            </van-image>
+          </div>
+          <!-- 推荐商品 -->
+          <div class="home-list-wrapper commend-wrapper">
+            <div class="layout-flex wrap-header">
+       <span class="header-icon">
+         <i class="iconfont">&#xe600;</i>
+       </span>
+              <div class="header-tit">
+                <h6 class="layout-text-ellipsis-1">推荐商品</h6>
+                <p class="layout-text-ellipsis-1">Recommended products</p>
+              </div>
+              <span class="header-arrow">
+         <van-icon name="arrow" size="16"/>
+       </span>
+            </div>
+            <div class="wrap-content">
+              <div class="wrap-goods-list">
+                <ul>
+                  <li v-for="item in commendGoods" :key="item.id">
                     <router-link class="content" tag="div" to="/">
                       <van-image
-                          width="100px"
-                          height="100px"
+                          width="100%"
+                          height="auto"
                           :src="item.cover"
                       />
                       <h6 class="layout-text-ellipsis-1">{{ item.title }}</h6>
-                      <p class="layout-text-ellipsis-1 price">￥{{item.price}}</p>
+                      <p class="layout-text-ellipsis-1 price">￥{{ item.price }}</p>
                     </router-link>
                   </li>
                 </ul>
-              </scroll-wrapper>
+              </div>
             </div>
           </div>
-        </div>
-        <!-- 广告区域 -->
-        <div class="home-a">
-          <van-image src="http://img.gyang.live/shop/exercise1.jpg"
-                     width="100%" height="80" fit="fill">
-            <template v-slot:loading>
-              <van-loading type="spinner" size="20" />
-            </template>
-            <template v-slot:error>加载失败</template>
-          </van-image>
-        </div>
-        <!-- 推荐商品 -->
-        <div class="home-list-wrapper commend-wrapper">
-          <div class="layout-flex wrap-header">
-       <span class="header-icon">
-         <i class="iconfont">&#xe600;</i>
-       </span>
-            <div class="header-tit">
-              <h6 class="layout-text-ellipsis-1">推荐商品</h6>
-              <p class="layout-text-ellipsis-1">Recommended products</p>
-            </div>
-            <span class="header-arrow">
-         <van-icon name="arrow" size="16" />
-       </span>
-          </div>
-          <div class="wrap-content">
-            <div class="wrap-goods-list">
-              <ul>
-                <li v-for="item in commendGoods" :key="item.id">
-                  <router-link class="content" tag="div" to="/">
-                    <van-image
-                        width="100%"
-                        height="auto"
-                        :src="item.cover"
-                    />
-                    <h6 class="layout-text-ellipsis-1">{{ item.title }}</h6>
-                    <p class="layout-text-ellipsis-1 price">￥{{ item.price }}</p>
-                  </router-link>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </scroll-wrapper>
+        </van-pull-refresh>
+      </scroll-wrapper>
+    </div>
   </div>
- </div>
 </template>
 
 <script lang="ts">
@@ -140,12 +139,9 @@ import { getHomeResult } from '@/api/home';
 import { BannerData, CategoryNavData, HomeGoodsData } from '@/api/types';
 import ScrollWrapper from '@/components/ScrollWarpper';
 import { ScrollPosition } from '@/components/ScrollWarpper/type';
-import PullLoading from '@/components/Loading/PullLoading.vue';
-
 @Component({
   name: 'Home',
   components: {
-    PullLoading,
     Search,
     Swipe,
     SwipeItem,
@@ -153,67 +149,67 @@ import PullLoading from '@/components/Loading/PullLoading.vue';
   },
 })
 export default class Home extends Vue {
-  // $refs定义
-  public $refs!: Vue['$refs'] & {
-    scrollWrapper: any;
-  };
+    // $refs定义
+    public $refs!: Vue['$refs'] & {
+      scrollWrapper: any;
+    };
 
-  private searchValue:string = '';
+    private searchValue: string = '';
 
-  private goodsListWidth: string = '100%';
+    private goodsListWidth: string = '100%';
 
-  private bannerList: BannerData[] = [];
+    private bannerList: BannerData[] = [];
 
-  private categoryNavList: CategoryNavData[] = [];
+    private categoryNavList: CategoryNavData[] = [];
 
-  private categoryGoods: HomeGoodsData[] = [];
+    private categoryGoods: HomeGoodsData[] = [];
 
-  private commendGoods: HomeGoodsData[] = [];
+    private commendGoods: HomeGoodsData[] = [];
 
-  private pullDownConfig: object = {
-    threshold: 80,
-    stop: 40,
-  };
+    private isPullLoading: boolean = false;
 
-  private loadState: number = 0;
+    private bounceConfig: object = {
+      top: false,
+      right: false,
+      bottom: false,
+      left: false,
+    };
 
-  private async getHomeData(callback?:() => void) {
-    const res = await getHomeResult();
-    if (res.success) {
-      this.bannerList = res.data.banner;
-      this.categoryNavList = res.data.categoryNav;
-      this.categoryGoods = res.data.categoryGoods;
-      this.commendGoods = res.data.commendGoods;
-    }
-    this.setGoodsWidth();
-    callback && callback();
-  }
-
-  private setGoodsWidth(): void {
-    this.$nextTick(() => {
-      const goodsRefs: any = this.$refs.goodsList;
-      const lis = goodsRefs.children;
-      if (!lis.length) {
-        return;
+    private async getHomeData(callback?: () => void) {
+      const res = await getHomeResult();
+      if (res.success) {
+        this.bannerList = res.data.banner;
+        this.categoryNavList = res.data.categoryNav;
+        this.categoryGoods = res.data.categoryGoods;
+        this.commendGoods = res.data.commendGoods;
       }
-      const len = lis.length;
-      const liw = lis[0].offsetWidth + 12;
-      this.goodsListWidth = `${liw * len}px`;
-    });
-  }
+      this.setGoodsWidth();
+      callback && callback();
+    }
 
-  // 页面下拉刷新
-  private scrollPullDown():void {
-    this.loadState = 0;
-    this.getHomeData(() => {
-      this.loadState = 1;
-      this.$refs.scrollWrapper.scroll.finishPullDown();
-    });
-  }
+    private setGoodsWidth(): void {
+      this.$nextTick(() => {
+        const goodsRefs: any = this.$refs.goodsList;
+        const lis = goodsRefs.children;
+        if (!lis.length) {
+          return;
+        }
+        const len = lis.length;
+        const liw = lis[0].offsetWidth + 12;
+        this.goodsListWidth = `${liw * len}px`;
+      });
+    }
 
-  private mounted() {
-    this.getHomeData();
-  }
+    // 页面下拉刷新
+    private onRefresh() {
+      this.getHomeData(() => {
+        this.isPullLoading = false;
+      });
+    }
+
+    private mounted() {
+      this.getHomeData();
+    }
 }
 </script>
 
@@ -221,10 +217,12 @@ export default class Home extends Vue {
   .layout-header {
     height: 55px;
   }
+
   .home-wrapper-container {
-    height:calc(100vh - 105px);
+    height: calc(100vh - 105px);
     overflow: hidden;
   }
+
   .header-search {
     top: 0;
     left: 0;
@@ -236,38 +234,47 @@ export default class Home extends Vue {
     padding: 0 12px;
     align-items: center;
     /*background: #fa5376;*/
+
     .logo {
       color: #fff;
       font-size: 20px;
     }
+
     .header-l {
       width: 15%;
     }
+
     .header-c {
-       flex-basis: 75%;
+      flex-basis: 75%;
     }
+
     .header-r {
       flex-basis: 10%;
       justify-content: center;
       align-items: center;
     }
+
     .van-search {
       width: 100%;
     }
   }
+
   .banner {
     width: 100%;
     height: 176px;
   }
+
   .category-nav {
     width: 100%;
     height: auto;
     overflow: hidden;
     padding: 16px 12px;
     background: #fff;
+
     ul {
       justify-content: space-around;
       align-items: center;
+
       li {
         width: 20%;
         display: flex;
@@ -276,39 +283,48 @@ export default class Home extends Vue {
         flex-direction: column;
         text-align: center;
       }
+
       .van-image {
         margin-bottom: 7px;
         opacity: .7;
         box-shadow: 2px 2px 11px rgba(250, 67, 106, 0.3);
       }
+
       .van-image__error {
         font-size: 12px;
       }
+
       .title {
         font-size: 14px;
         color: #333;
       }
     }
   }
+
   .home-list-wrapper {
     background: #fff;
     margin-top: 8px;
     padding: 0 16px;
+
     .wrap-header {
       align-items: center;
       height: 78px;
       padding: 4px 0;
+
       .header-icon {
         font-size: 44px;
         color: #FA4DBE;
         padding-right: 11px;
       }
+
       .header-tit {
         flex: 1;
+
         h6 {
           font-size: 18px;
           line-height: 1.2;
         }
+
         p {
           font-size: 12px;
           color: #909399;
@@ -316,18 +332,22 @@ export default class Home extends Vue {
         }
       }
     }
+
     .wrap-content {
       width: 100%;
       height: auto;
       overflow: hidden;
     }
   }
+
   .home-a {
     height: 80px;
     margin-top: 8px;
   }
+
   .wrap-goods-list {
     width: 100%;
+
     ul {
       display: flex;
       justify-content: flex-start;
@@ -335,9 +355,11 @@ export default class Home extends Vue {
       flex-wrap: nowrap;
       width: 100%;
     }
+
     li {
       width: 100px;
       margin-right: 12px;
+
       .content {
         display: block;
         width: 100%;
@@ -345,23 +367,27 @@ export default class Home extends Vue {
         color: #303133;
         line-height: 1.8;
       }
+
       .price {
         color: #fa436a;
       }
     }
   }
+
   .commend-wrapper {
     margin-bottom: .5rem;
+
     .wrap-goods-list {
-       ul {
-         flex-wrap: wrap;
-         li {
-           width: 50%;
-           padding: 0 .2rem;
-           margin-right: 0;
-           margin-bottom: .2rem;
-         }
-       }
+      ul {
+        flex-wrap: wrap;
+
+        li {
+          width: 50%;
+          padding: 0 .2rem;
+          margin-right: 0;
+          margin-bottom: .2rem;
+        }
+      }
     }
   }
 </style>

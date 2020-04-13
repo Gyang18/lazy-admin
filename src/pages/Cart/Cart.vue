@@ -12,7 +12,7 @@
               <van-image
                   width="115px"
                   height="115px"
-                  :src="item.image"
+                  :src="item.cover"
               />
             </div>
           </div>
@@ -55,7 +55,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import { Checkbox, Stepper } from 'vant';
-import { GoodsCartItem } from '@/api/types';
+import { GoodsCartItem } from '@/api/types/goods';
 import { getGoodsCartResult } from '@/api/goods';
 import ScrollWrapper from '@/components/ScrollWarpper';
 
@@ -134,6 +134,7 @@ export default class Cart extends Vue {
     const res = await getGoodsCartResult();
     if (res.success) {
       this.cartList = res.data;
+      this.getSelectedGoods();
     }
   }
 

@@ -42,6 +42,7 @@
     "no-unused-expression": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "no-trailing-whitespace": false
+    "no-trailing-whitespace": false,
+    "no-unused-variable": false
   }
 }

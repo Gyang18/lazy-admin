@@ -4,7 +4,7 @@
  * @date 2019-08-05
  */
 import http from '@/plugins/axios';
-import { Login, UserInfo } from './types';
+import { Login, UserInfo } from './types/user';
 
 export function userLogin(params: {}) {
   return http<Login>({

@@ -12,7 +12,7 @@ module.exports = {
   title: 'yang-shop',
   logo: '',
   auth: false,
-  apiDev: 'http://yapi.gyang.live/mock/11/app',
+  apiDev: 'http://yapi.gyang.live/mock/15/api-app',
   apiTest: 'http://api.test',
   api: 'http://api',
 };

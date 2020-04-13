@@ -18,6 +18,22 @@ const blankRoutes: Router[] = [
       },
     ],
   },
+  {
+    path: '/goods',
+    component: BlankLayout,
+    children: [
+      {
+        path: 'goods-list',
+        component: () => import('@/pages/Goods/List'),
+        meta: { isShowHeader: true, title: '商品列表' },
+      },
+      {
+        path: 'goods-detail',
+        component: () => import('@/pages/Goods/Details'),
+        meta: { isShowHeader: true, title: '商品详情' },
+      },
+    ],
+  },
 ];
 
 export default blankRoutes;

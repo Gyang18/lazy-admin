@@ -52,7 +52,7 @@ import { Vue, Component } from 'vue-property-decorator';
 import ScrollWrapper from '@/components/ScrollWarpper';
 import { ScrollPosition } from '@/components/ScrollWarpper/type';
 import { getGoodsCategoryResult } from '@/api/goods';
-import { GoodsCategory } from '@/api/types';
+import { GoodsCategory } from '@/api/types/goods';
 
 @Component({
   name: 'Category',
@@ -68,7 +68,7 @@ export default class Category extends Vue {
     menuScroll: any;
     ScrollContainer: any;
   };
-    
+
   // 当前索引
   private currentIndex: number = 0;
 
@@ -93,6 +93,9 @@ export default class Category extends Vue {
   // 左侧点击
   private wrapperScrollTo(index: number): void {
     this.currentIndex = index;
+    if (this.scrollY === 0) {
+      return;
+    }
     const wrapper = this.$refs.ScrollContainer.scroll;
     wrapper.scrollTo(0, -this.categoryTops[index], 300);
   }
@@ -109,7 +112,7 @@ export default class Category extends Vue {
       const wrapper: any[] = this.$refs.categoryGroup as HTMLDivElement[];
       const itemArray: number[] = [];
       let top = 0;
-      wrapper.forEach((item, index) => {
+      wrapper.forEach(item => {
         const items = item.getBoundingClientRect();
         // 将顶部导航栏的高度减去
         top = items.top - 46;

@@ -4,7 +4,7 @@
  * @date 2020/1/30
  */
 import http from '@/plugins/axios';
-import { GoodsCategoryList, GoodsCartList } from '@/api/types';
+import { GoodsCategoryList, GoodsCartList } from '@/api/types/goods';
 
 // 获取商品分类
 export function getGoodsCategoryResult() {

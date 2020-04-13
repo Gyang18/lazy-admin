@@ -95,14 +95,14 @@
             </van-image>
           </div>
           <!-- 推荐商品 -->
-          <div class="home-list-wrapper commend-wrapper">
+          <div class="home-list-wrapper recommend-wrapper">
             <div class="layout-flex wrap-header">
-       <span class="header-icon">
-         <i class="iconfont">&#xe600;</i>
-       </span>
+             <span class="header-icon">
+               <i class="iconfont">&#xe600;</i>
+             </span>
               <div class="header-tit">
                 <h6 class="layout-text-ellipsis-1">推荐商品</h6>
-                <p class="layout-text-ellipsis-1">Recommended products</p>
+                <p class="layout-text-ellipsis-1">Rerecommended products</p>
               </div>
               <span class="header-arrow">
          <van-icon name="arrow" size="16"/>
@@ -111,17 +111,19 @@
             <div class="wrap-content">
               <div class="wrap-goods-list">
                 <ul>
-                  <li v-for="item in commendGoods" :key="item.id">
-                    <router-link class="content" tag="div" to="/">
-                      <van-image
-                          width="100%"
-                          height="auto"
-                          :src="item.cover"
-                      />
-                      <h6 class="layout-text-ellipsis-1">{{ item.title }}</h6>
-                      <p class="layout-text-ellipsis-1 price">￥{{ item.price }}</p>
-                    </router-link>
-                  </li>
+                  <template v-for="item in recommendGoods">
+                    <li :key="item.id">
+                      <router-link class="content" tag="div" to="/goods/goods-list">
+                        <van-image
+                            width="100%"
+                            height="auto"
+                            :src="item.cover"
+                        />
+                        <h6 class="layout-text-ellipsis-1">{{ item.title }}</h6>
+                        <p class="layout-text-ellipsis-1 price">￥{{ item.price }}</p>
+                      </router-link>
+                    </li>
+                  </template>
                 </ul>
               </div>
             </div>
@@ -135,10 +137,12 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import { Search, Swipe, SwipeItem } from 'vant';
-import { getHomeResult } from '@/api/home';
-import { BannerData, CategoryNavData, HomeGoodsData } from '@/api/types';
+import { getHomeResult, getHomeRecommendResult } from '@/api/home';
+import {
+  BannerData, CategoryNavData, HomeGoodsData, RecommendGoodsItem,
+} from '@/api/types/home';
 import ScrollWrapper from '@/components/ScrollWarpper';
-import { ScrollPosition } from '@/components/ScrollWarpper/type';
+// import { ScrollPosition } from '@/components/ScrollWarpper/type';
 @Component({
   name: 'Home',
   components: {
@@ -164,7 +168,7 @@ export default class Home extends Vue {
 
     private categoryGoods: HomeGoodsData[] = [];
 
-    private commendGoods: HomeGoodsData[] = [];
+    private recommendGoods: RecommendGoodsItem[] = [];
 
     private isPullLoading: boolean = false;
 
@@ -177,11 +181,14 @@ export default class Home extends Vue {
 
     private async getHomeData(callback?: () => void) {
       const res = await getHomeResult();
+      const recommend = await getHomeRecommendResult();
       if (res.success) {
         this.bannerList = res.data.banner;
         this.categoryNavList = res.data.categoryNav;
         this.categoryGoods = res.data.categoryGoods;
-        this.commendGoods = res.data.commendGoods;
+      }
+      if (recommend.success) {
+        this.recommendGoods = recommend.data.list;
       }
       this.setGoodsWidth();
       callback && callback();
@@ -374,7 +381,7 @@ export default class Home extends Vue {
     }
   }
 
-  .commend-wrapper {
+  .recommend-wrapper {
     margin-bottom: .5rem;
 
     .wrap-goods-list {

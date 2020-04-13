@@ -30,6 +30,7 @@ module.exports = {
         "import/no-unresolved": "off",
         "no-trailing-spaces": ["error", { "skipBlankLines": true }],
         "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": ["error"],
         "import/prefer-default-export": "off",
     },
     parserOptions: {

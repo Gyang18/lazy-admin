@@ -1,5 +1,5 @@
 /**
- * @Description: 空白布局页面
+ * @Description: 空白布局页面（只包含导航栏）
  * @author yang
  * @date 2020/1/31
  */
@@ -15,22 +15,6 @@ const blankRoutes: Router[] = [
         path: 'login',
         component: () => import('@/pages/Login'),
         meta: { title: '登陆' },
-      },
-    ],
-  },
-  {
-    path: '/goods',
-    component: BlankLayout,
-    children: [
-      {
-        path: 'goods-list',
-        component: () => import('@/pages/Goods/List'),
-        meta: { isShowHeader: true, title: '商品列表' },
-      },
-      {
-        path: 'goods-detail',
-        component: () => import('@/pages/Goods/Details'),
-        meta: { isShowHeader: true, title: '商品详情' },
       },
     ],
   },

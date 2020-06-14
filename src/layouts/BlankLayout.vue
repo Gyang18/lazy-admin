@@ -15,7 +15,7 @@ import LayoutMixins from './mixin';
 import LayoutNavBar from '@/components/NavBar';
 
 @Component({
-  name: 'BlankLayout.vue',
+  name: 'BlankLayout',
   components: {
     LayoutNavBar,
   },

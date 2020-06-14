@@ -86,14 +86,6 @@
                 <div class="header-r"></div>
               </div>
               <div class="cover-wrapper-content">
-                <!--              <div class="total-item">-->
-                <!--                <span class="iconfont yangshinshopshouhuodizhi icon"></span>-->
-                <!--                <span class="title">收货地址</span>-->
-                <!--              </div>-->
-                <!--              <div class="total-item">-->
-                <!--                <span class="iconfont yangshinshopxihuan icon"></span>-->
-                <!--                <span class="title">我的收藏</span>-->
-                <!--              </div>-->
                 <van-grid :border="false">
                   <van-grid-item text="浏览记录">
                     <template slot="icon">
@@ -105,7 +97,7 @@
                       <van-icon name="like-o" size="28" color="#fa436a"/>
                     </template>
                   </van-grid-item>
-                  <van-grid-item text="收货地址">
+                  <van-grid-item text="收货地址" @click="$router.push('/base/address/list')">
                     <template slot="icon">
                       <van-icon name="location-o" size="28" color="#5eba8f"/>
                     </template>
@@ -150,7 +142,6 @@ import { Vue, Component } from 'vue-property-decorator';
 import { Grid, GridItem } from 'vant';
 import { OrderStatusItem } from './interface';
 import ScrollWrapper from '@/components/ScrollWarpper';
-import { ScrollPosition } from '@/components/ScrollWarpper/type';
 @Component({
   name: 'User',
   components: {

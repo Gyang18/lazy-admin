@@ -40,7 +40,7 @@ export default class AddressEdit extends Vue {
   }
 
   // 监听数据填写
-  onChangeDetail(val: string) {
+  private onChangeDetail(val: string) {
     if (val) {
       this.searchResult = [
         {
@@ -55,6 +55,10 @@ export default class AddressEdit extends Vue {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="less">
+  /deep/.van-address-edit__buttons {
+    .van-button--danger {
+      background-color: #fa5376;
+    }
+  }
 </style>

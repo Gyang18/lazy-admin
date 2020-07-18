@@ -36,31 +36,53 @@ const baseRoutes: Router[] = [
           title: '我的', isBackShow: false, isShowHeader: false, isShowTabbar: true,
         },
       },
+    ],
+  },
+  {
+    path: '/goods',
+    component: BlankLayout,
+    children: [
       {
-        path: '/goods',
-        component: BlankLayout,
-        children: [
-          {
-            path: 'goods-list',
-            component: () => import('@/pages/Goods/List'),
-            meta: { isShowHeader: true, title: '商品列表' },
-          },
-          {
-            path: 'goods-detail',
-            component: () => import('@/pages/Goods/Details'),
-            meta: { isShowHeader: true, title: '商品详情' },
-          },
-        ],
+        path: 'goods-list',
+        component: () => import('@/pages/Goods/List'),
+        meta: { isShowHeader: true, title: '商品列表' },
       },
       {
-        path: 'address/list',
+        path: 'goods-detail',
+        component: () => import('@/pages/Goods/Details'),
+        meta: { isShowHeader: false, title: '商品详情' },
+      },
+    ],
+  },
+  {
+    path: '/address',
+    component: BlankLayout,
+    children: [
+      {
+        path: 'list',
         component: () => import('@/pages/Address/List'),
         meta: { title: '收货地址' },
       },
       {
-        path: 'address/edit',
+        path: 'edit',
         component: () => import('@/pages/Address/Edit'),
         meta: { title: '编辑收货地址' },
+      },
+    ],
+  },
+  {
+    path: '/order',
+    component: BlankLayout,
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/pages/Order/List'),
+        meta: { title: '订单列表' },
+      },
+      {
+        path: 'detail',
+        component: () => import('@/pages/Order/Details'),
+        meta: { title: '订单详情' },
       },
     ],
   },

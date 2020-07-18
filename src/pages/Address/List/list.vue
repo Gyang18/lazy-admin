@@ -46,7 +46,7 @@ export default class AddressList extends Vue {
   // 新增地址
   private onAdd():void {
     console.log('新增地址');
-    this.$router.push('/base/address/edit');
+    this.$router.push('/address/edit');
   }
 
   private onEdit(item: AddressItemInterface, index: number): void {

@@ -1,11 +1,9 @@
 <template>
   <div class="layout">
     <layout-nav-bar />
-    <div class="layout-container">
-      <keep-alive :include="cacheViews">
-        <router-view :key="pathKey"/>
-      </keep-alive>
-    </div>
+    <keep-alive :include="cacheViews">
+      <router-view :key="pathKey"/>
+    </keep-alive>
     <div class="layout-footer" v-if="meta.isShowTabbar">
       <tabbar v-model="activePath" fixed>
         <tabbar-item name="home" relpace to="/base/home" icon="home-o">首页</tabbar-item>

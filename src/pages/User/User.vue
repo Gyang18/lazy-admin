@@ -67,12 +67,14 @@
             </div>
             <div class="cover-wrapper total-wrapper total-order-wrapper">
               <div class="layout-flex cover-wrapper-content">
-                <div class="total-item" v-for="(item, index) in orderStatus" :key="index">
-              <span class="icon">
-                <van-icon :name="item.icon" size="26" color="#fa436a"/>
-              </span>
-                  <span class="desc">{{ item.name }}</span>
-                </div>
+                <template v-for="(item, index) in orderStatus">
+                  <div class="total-item" :key="index" @click="$router.push(item.path)">
+                    <span class="icon">
+                      <van-icon :name="item.icon" size="26" color="#fa436a"/>
+                    </span>
+                    <span class="desc">{{ item.name }}</span>
+                  </div>
+                </template>
               </div>
             </div>
             <div class="cover-wrapper total-wrapper user-server">
@@ -97,7 +99,7 @@
                       <van-icon name="like-o" size="28" color="#fa436a"/>
                     </template>
                   </van-grid-item>
-                  <van-grid-item text="收货地址" @click="$router.push('/base/address/list')">
+                  <van-grid-item text="收货地址" @click="$router.push('/address/list')">
                     <template slot="icon">
                       <van-icon name="location-o" size="28" color="#5eba8f"/>
                     </template>

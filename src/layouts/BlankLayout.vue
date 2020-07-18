@@ -1,11 +1,9 @@
 <template>
   <div class="layout">
     <layout-nav-bar />
-    <div class="layout-container">
-      <keep-alive :include="cacheViews">
-        <router-view :key="pathKey"/>
-      </keep-alive>
-    </div>
+    <keep-alive :include="cacheViews">
+      <router-view :key="pathKey"/>
+    </keep-alive>
   </div>
 </template>
 

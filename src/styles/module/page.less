@@ -16,3 +16,35 @@
   background-color: @primary !important;
   border-color: @primary !important;
 }
+
+// 评论列表
+.page-evaluation-list {
+  height: auto;
+  overflow: hidden;
+  .evaluation-item {
+    padding: 10px 0;
+    .item-left {
+      width: 44px;
+      height: 44px;
+      overflow: hidden;
+    }
+    .item-right {
+      margin-left: 14px;
+      .name {
+        font-size: 14px;
+        color: #606266;
+      }
+      .context {
+        font-size: 14px;
+        color: #333;
+        line-height: 1.5;
+        padding: 4px 0;
+      }
+    }
+    .item-goods-info {
+      width: 100%;
+      color: #909399;
+      font-size: 12px;
+    }
+  }
+}

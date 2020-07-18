@@ -69,7 +69,7 @@
                 <scroll-wrapper :data="categoryGoods" scroll-x>
                   <ul ref="goodsList" :style="{ width: goodsListWidth }">
                     <li v-for="item in categoryGoods" :key="item.id">
-                      <router-link class="content" tag="div" to="/">
+                      <router-link class="content" tag="div" :to="`/goods/goods-detail?id=${item.id}`">
                         <van-image
                             width="100px"
                             height="100px"

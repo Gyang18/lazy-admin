@@ -3,6 +3,20 @@
 
 基于vue+typescript搭建的h5商城模版
 
+## 已完成页面
+
+[] 首页
+
+[] 分类
+
+[] 购物车
+
+[] 商品详情
+
+[x] 商品列表
+
+[] 订单列表
+
 ## Project setup
 ```
 npm install

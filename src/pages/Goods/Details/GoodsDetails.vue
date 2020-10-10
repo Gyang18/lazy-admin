@@ -6,7 +6,7 @@
     }">
       <div class="navbar-left">
         <span class="layout-flex layout-flex-center layout-align-center navbar-back"
-        @click="goPrevPage">
+        @click="goPrevPage( -1 )">
           <van-icon name="arrow-left"/>
         </span>
       </div>
@@ -90,11 +90,13 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+
 import {
   Swipe, SwipeItem, GoodsAction, GoodsActionIcon, GoodsActionButton,
   Icon, Image,
 } from 'vant';
 import ScrollWrapper from '@/components/ScrollWarpper/ScrollWrapper.vue';
+import commonMixins from '@/mixins/common';
 import { ScrollPosition } from '@/components/ScrollWarpper/type';
 
 @Component({
@@ -111,7 +113,7 @@ import { ScrollPosition } from '@/components/ScrollWarpper/type';
     'scroll-wrapper': ScrollWrapper,
   },
 })
-export default class GoodsDetails extends Vue {
+export default class GoodsDetails extends commonMixins {
     // 商品轮播
     private goodsBanner: string[] = [
       'https://img.yzcdn.cn/vant/apple-1.jpg',

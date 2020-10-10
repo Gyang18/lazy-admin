@@ -9,9 +9,6 @@ import './setting';
 // styles
 import './styles';
 
-// mixins
-import './mixins/global';
-
 // plugins
 import './plugins';
 

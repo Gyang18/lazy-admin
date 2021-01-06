@@ -14,7 +14,7 @@
   "dependencies": {
     "@types/lodash": "^4.14.149",
     "@types/qs": "^6.9.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "better-scroll": "^1.15.2",
     "core-js": "^3.4.4",
     "lodash": "^4.17.15",
